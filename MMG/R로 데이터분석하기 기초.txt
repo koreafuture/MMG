@@ -1,0 +1,110 @@
+<plyr 패키지를 사용해서 데이터를 분석해보자!>-R을 이용한 간단한 데이터분석 기초
+1. plyr패키지
+-데이터 분할(spilt)
+-특정 함수 적용(apply)
+-재조합(combine)
+-입력 : 배열, 데이터프레임, 리스트
+-출력 : 배열, 데이터프레임, 리스트
+2. 
+첫번째 글자 : 입력(배열:a , 데이터프레임 : d , 리스트 : ㅣ)
+두번째 글자 : 출력(배열: a , 데이터프레입 : d , 리스트 : l , 출력이 없음:_)
+예를들어, 함수명이 adply() : 입력은 배열 출력은 데이터프레임 , llply() : 입출력이 모두 리스트
+
+* 패키지 설치하기
+>>install.packages("plyr")
+>>library(plyr)   //plyr패키지를 로드해서 사용하겠다는 의미.
+
+* adply 확인하기
+>>help(adply)  =>  adply(.data, .margins ( 해석하고자 하는 데이터의 방향 : 1이면 row, 2이면 col, c(1,2) 이면 1,2의 데이터), .fun )
+
+* apply() 함수 사용 예제(iris)
+>>apply(iris[,1:4] ,1 ,function(row){print(row)} )   
+  <코드 설명> 
+- iris 는 데이터, 
+- iris[,1:4] 는 1열부터 4열까지의 데이터를 활용, 
+- 1 은 행데이터를 이용함을 의미, 
+- function(row){print(row)}는 행 값을 출력하는 함수임.
+
+* iris 예제의 structure 보기
+>>str(iris)    //iris의 구조를 본다.   
+
+* iris 의 전체에 대해서  행으로 정렬해서 출력
+>>apply(iris ,1 ,function(row){print(row)} )  
+    <부가설명>
+- 모든데이터에 "  "  표시가 있는데 이것은 문자열을 의미!!  
+   =>apply함수의 단점!! 한가지 값만을 결과로 반환함! (iris데이터 내에 문자열 데이터가 존재)
+   => 해결책은 adply를 사용! 데이터 프레임으로 출력하기 때문에 여러 데이터 타입을 처리할 수 있음.
+
+* iris예제로 adply 사용해보기
+>> adply(iris,1,function(row){print(row)})
+   <부가설명>
+- 데이터 프레임 형식으로 결과를 출력하므로 겹따옴표("   ")가 없음을 확인할 수 있다.
+ 
+*  위 출력의 구조를 확인
+>> str(adply(iris,1,function(row){printf(row)}))   //데이터 프레임을 확인할 수 있음.
+
+*adply를 활용하기1(iris의 데이터 내에서 Sepal.Length의 값이 5보다 크거나 같은 값을 출력하기)
+>>adply(iris,1,function(row){row$Sepal.Length>=5.0})
+
+   <코드설명>
+- function의 row는 iris데이터를  의미!!(즉, 이를 row데이터라고 함.)
+- row$Sepal.Length 는 row데이터 에서 Sepal.Length에 대해서만 출력
+- 1 은 데이터를 처리하는데 행 데이터를 사용 
+  <부가 설명>
+- v1이라는 필드가 하나 생성되고 그 값으로 true/ false를 확인 할 수 있음!
+- v1은 데이터를 처리한 출력 값임.
+
+*adply활용하기2( iris내의 데이터 중 종별로 Sepal.Length 가 5보다 크거나 같은 것을 출력하기)
+>>adply(iris,1,function(row){row$Sepal.Length>=5.0 & row$Species=="setosa"})
+
+  <코드설명>
+- function(row){row$Sepal.Length>=5.0 & row$Species=="setosa"} 는 종이 세토사 이고, 길이가 5이상인 값들에 대해 true/ false로 출력
+
+* 출력이 v1으로 할당이 되었는데 v1을 데이터 프레임으로 반환하기(즉, 태그 이름 설정하기)
+ >>adply(iris,1,function(row){data.frame(se_sa=c(row$Sepal.Length>=5.0 & row$Species=="setosa"))})
+ 
+   <코드설명>
+-  function(row){data.frame(se_sa=c(row$Sepal.Length>=5.0 & row$Species=="setosa"))}
+    => data.frame()데이터 프레임을 설정하는 코드, c()는 c함수를 사용-> 이 괄호 안에는 조건이 들어감.
+   <부가 설명>
+-  출력이 같으나 v1이 se_sa(Sepal.Length 와 setosa를 의미하느 내맘대로 정한 변수)로 바뀌었음을 알 수 있다.
+
+* ddply 에 대해 알아보기
+>>help(ddply)       // 입력 dataframe, 출력: dataframe인 함수
+
+*adply와 ddply의 차이점 
+-  adply는 행 or 열 단위로 함수 적용  
+- ddply는 지정한 열에 따라서  데이터를 나누고 함수를 적용한다는 점.
+
+*iris 데이터에서 Sepal.Width의 평균을 종별로 출력하기
+>>ddply(iris, .(Species) , function(sub){data.frame(Sepal.Width.mean=mean(sub$Sepal.Width))})
+
+   <코드설명>
+-  Sepal.Width.mean  는 필드 이름.
+-  function(sub){} 는 평균값을 내는 함수
+-  위 코드에서 .(Species) 는 종별로 평균을 내겠다는 의미 
+-  위 코드ㅔ서 sub$Sepal.Width 는 Sepal.Width를 평균 내겠다는 의미.
+
+
+* 위에 이어서 Sepal.Length가 5 이상인것들 의 평균 과 5이하인 것들의 평균을 출력하기
+>>ddply(iris, .(Species, Sepal.Length>5.0) , function(sub){data.frame(Sepal.Length.mean=mean(sub$Sepal.Length))})
+
+   <코드설명>
+-   .(Species, Sepal.Length>5.0) 으로 종별로 그리고 길이가 5.0이상인 것들(true/false)로 구분한다.
+
+
+* baseball 데이터를 활용해보기
+>>head(baseball)       //baseball데이터의 헤더 를 본다.
+>>str(baseball)     // baseball데이터의 구조를 호가인한다.
+>>help(baseball)     //baseball데이터에 대한 설명
+
+* baseball데이터에서 ansonca01 이라는 선수의 기록 확인 하기
+>> head(subset(baseball, id=="ansonca01"))         //ansonca01선수에대한 데이터가 나온다.
+
+* 선수별로 경기횟수의 평균 출력하기
+>>ddply(baseball, .(id), function(sub){mean(sub$g)})
+
+   <코드설명>
+- .(id)  tag는 id를 기준으로 함. 
+-  mean(sub$g)   는 g(경기 횟수)필드에 대한 평균
+
