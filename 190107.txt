@@ -1,0 +1,50 @@
+190107
+
+오늘의 기록
+
+범수찡 마스터
+
+히중찡
+윤식찡 브랜치 생성후 풀리퀘스트 테스트 확인완료.
+
+서버 윤식띵 서버로 옮긴 후, 
+
+참고. 
+https://wayhome25.github.io/git/2017/07/08/git-first-pull-request-story/
+ - git userguide 
+
+-1 Server 에 파이썬 설치 하는법
+
+https://suwoni-codelab.com/python%20%EA%B8%B0%EB%B3%B8/2018/03/21/Python-Basic-PIP/
+
+Pip 라이브러리
+
+플라스크
+
+Pip install flask
+Pip install beautifulsoup4
+
+
+-2 
+
+서버접속 
+
+Chmod 400 ~/desktop/key/MMGKey.pem
+Ssh -I ~/desktop/key/MMGKey.pem ec2-user@ec2-13-125-224-247.ap-northeast-2.compute.amazonaws.com
+
+
+서버 접속 후
+
+깃 인스톨
+
+Sudo yum install git(Red-hat based linux)
+
+#인스턴스 종료 절대금지 > 인스턴스 새로하나 만들거나, 아이디 새로만들어서 인스턴스 새로해야함.
+
+Python —version
+curl -O https://bootstrap.pypa.io/get-pip.py
+Python get pip.py —user
+Pip install flask —user
+Pip install beautifulsoup4 —user
+
+— 오늘은 저번처럼 리눅스 서버에서 원격으로 파이썬 파일 켜보고, 포트 5000으로 실행되는것 까지 확인함 - 
