@@ -21,6 +21,9 @@ for i in soup_ssy:
     print(i.text)
 '''
 
+from flask import Flask
+from gevent.pywsgi import WSGIServer
+
 app = Flask(__name__)
 
 
