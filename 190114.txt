@@ -1,0 +1,39 @@
+190114 의 기록
+
+원격 리눅스 접속후
+
+Cd MMG/MMG/kakaobot 폴더 들어가서.
+
+로컬에서 PR 후 원격서버로 파일을 덮어쓰고싶으면
+
+Kakaobot 폴더에서 
+
+Git pull origin 명령어 쓰면, 파일 자동으로 덮어쓰게됨.
+
+
+탄력적 아이피 할당 후 아이피 바뀜
+
+서버접속 방법 바뀜(히중이 전용)
+
+Ssh -I ~/desktop/key/MMGKey.pem ec2-user@ec2-13-124-176-169.ap-northeast-2.compute.amazonaws.com
+
+개발시
+
+터미널창 두개키고 작업하는게 편함.
+
+1. 로컬에서 깃으로 파일 추가할 명령어 쓸 터미널.
+2. 원격서버에서 개발명령어 쓸 터미널.
+
+from flask import Flask
+from gevent.pywsgi import WSGIServer
+
+kyonggi.py 에 두줄 추가함.
+
+Export FLASK_ENV=development 로 변경, 다시 프로덕션 환경으로 변경시
+Export FLASK_ENV=production 명령어 적으면 됨
+
+병옥햄 링크에서 설치하라고해서 설치한것
+
+pip install event —user(—user 꼭 해줘야함.)
+
+Not found 는 변함없이 발생하고있음. 이걸 해결해야하는게 가장 큰 숙제일듯.
